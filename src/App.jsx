@@ -39,14 +39,14 @@ function App() {
     <div className="ambient" aria-hidden="true"><span>✿</span><span>✧</span><span>❀</span><span>✿</span><span>❧</span></div>
     <section className="hero" id="home">
       <div className="topline"><span>THE WEDDING CELEBRATION</span><Heart size={14}/><span>{wedding.shortDate}</span></div>
-      <AnimatePresence mode="wait">
+      
       {!opened ? <motion.div className="envelope-wrap" key="envelope" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,scale:.92}}>
         <div className="eyebrow">A little note, sealed with love</div>
         <motion.div className={`envelope ${opening ? 'opening' : ''}`} drag={opening ? false : 'y'} dragConstraints={{top:-100,bottom:0}} dragElastic={0.16} onDragEnd={(_,info)=>{if(info.offset.y < -35 || info.velocity.y < -250) handleOpen();}} onClick={handleOpen} role="button" tabIndex="0" aria-label="Swipe up or tap to open the wedding invitation" onKeyDown={e=>e.key==='Enter'&&handleOpen()}>
           <div className="letter"><span>A SPECIAL INVITATION</span><strong>You're Invited</strong><span>WITH LOVE & JOY</span></div><div className="flap"></div><div className="seal"><Heart fill="currentColor" size={22}/></div>
         </motion.div>
         <div className="swipe-cue"><Hand size={20}/><span>SWIPE UP TO OPEN</span><span className="swipe-arrow">↑</span></div><p className="tap">OR TAP THE WAX SEAL</p>
-      </motion.div> : <motion.div className="invitation" key="invite" initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:.8}}>
+      </motion.div> : <div className="invitation">
         <div className="ornament">❧</div><div className="eyebrow">Together with our families</div>
         <p className="hero-kicker">JOYFULLY INVITE YOU TO CELEBRATE</p><h1>We're getting<br/><i>married</i></h1>
         <p className="intro">{wedding.message}</p>
@@ -54,16 +54,16 @@ function App() {
         <div className="date-line"><span></span><p>{wedding.date}</p><span></span></div>
         <a className="scroll-cue" href="#reveal">SCROLL TO EXPLORE <ChevronDown size={15}/></a>
       </motion.div>}
-      </AnimatePresence>
+      
       <div className="bottom-note">MADE WITH LOVE <Heart size={12} fill="currentColor"/></div>
     </section>
     {opened && <motion.div className="content" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2}}>
       <section className="intro-strip"><Flower2 size={27}/><p>Two hearts, one beautiful journey.<br/><i>A lifetime of love begins here.</i></p><span className="tiny-rule"></span></section>
       <section className="reveal-section" id="reveal">
-        <div className="section-label">A LITTLE SURPRISE</div><h2>Pull to <i>reveal</i></h2><p className="section-copy">Slide the golden handle and uncover the date we've been waiting for.</p>
+        <div className="section-label">A MOMENT TO REMEMBER</div><h2>Unveil our <i>special day</i></h2><p className="section-copy">A little golden surprise is waiting for you. Slide to discover the day our forever begins.</p>
         <div className={`reveal-card ${revealed ? 'is-revealed' : ''}`}>
-          <div className="reveal-card-inner"><span className="mini-flower">✿</span><p className="reveal-overline">THE BIG DAY</p><strong>{wedding.date}</strong><span className="reveal-venue">{wedding.venue}</span><div className="reveal-divider">❧</div><Countdown/></div>
-          {!revealed && <div className="reveal-cover"><span>OUR FOREVER BEGINS</span><strong>20 · 12 · 2026</strong><small>slide to unveil</small></div>}
+          <div className="reveal-card-inner"><span className="mini-flower">✿</span><p className="reveal-overline">SAVE THIS BEAUTIFUL DATE</p><strong>{wedding.date}</strong><span className="reveal-venue">{wedding.venue}</span><div className="reveal-divider">✧ &nbsp; ❧ &nbsp; ✧</div><Countdown/><span className="reveal-blessing">WE CAN’T WAIT TO CELEBRATE WITH YOU</span></div>
+          {!revealed && <div className="reveal-cover"><span className="cover-flower">✿</span><span>THE COUNTDOWN TO FOREVER</span><strong>{wedding.shortDate}</strong><small>SLIDE THE GOLDEN SEAL</small><span className="cover-heart">♡</span></div>}
         </div>
         <div className="slider-wrap"><span>←</span><input aria-label="Slide to reveal wedding date" type="range" min="0" max="100" value={reveal} onChange={e=>{const n=Number(e.target.value);setReveal(n);if(n>94)setRevealed(true);}}/><span>→</span></div>
         <p className="slider-hint"><Hand size={15}/> {revealed ? 'THE DATE IS REVEALED — SAVE IT!' : 'DRAG THE GOLDEN HANDLE TO REVEAL'}</p>
