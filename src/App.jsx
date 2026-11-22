@@ -18,7 +18,7 @@ return <main className="site-shell"><div className="petal-field" aria-hidden="tr
 <section className="reveal-section vintage-reveal" id="reveal"><div className="section-label">A LITTLE SURPRISE FOR YOU</div><h2>Unroll our <i>Invitation</i></h2><p className="section-copy">Like the beautiful scroll invitations of old — gently pull down to reveal the special day.</p>
 <div className="scroll-invitation">
   <div className="scroll-top-rod"><span>✦</span><b>✿</b><span>✦</span></div>
-  <div className="scroll-paper-window">
+  <div className="scroll-paper-window" style={{height:reveal*3.25}}>
     <motion.div className="scroll-paper" animate={{height: reveal*3.25,opacity:reveal===0?0:1}} transition={{type:'spring',stiffness:115,damping:20}}>
       <div className="scroll-paper-inner">
         <div className="scroll-ornament">❧　✧　❧</div><div className="ganesh-small">ॐ</div>
