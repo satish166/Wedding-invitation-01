@@ -53,7 +53,7 @@ function App() {
         <div className="names"><span>{wedding.groom}</span><b>&</b><span>{wedding.bride}</span></div>
         <div className="date-line"><span></span><p>{wedding.date}</p><span></span></div>
         <a className="scroll-cue" href="#reveal">SCROLL TO EXPLORE <ChevronDown size={15}/></a>
-      </motion.div>}
+      </div>}
       
       <div className="bottom-note">MADE WITH LOVE <Heart size={12} fill="currentColor"/></div>
     </section>
