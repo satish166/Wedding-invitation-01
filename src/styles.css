@@ -201,3 +201,73 @@
  .site-shell[data-theme="rose"] .envelope-wrap,.site-shell[data-theme="midnight"] .envelope-wrap{padding:24px 12px}
  .site-shell[data-theme="lavender"] .rsvp{border-radius:48px 48px 0 0}
 }
+
+/* Sandhu design signature */
+.site-shell footer .design-credit{margin:26px auto 0;padding-top:15px;width:min(90%,360px);border-top:1px solid currentColor;font-size:10px;letter-spacing:.2em;opacity:.86}
+.site-shell footer .design-credit strong{font-weight:800;letter-spacing:.24em}
+.site-shell footer{padding-bottom:30px}
+
+/* Distinct editorial compositions for each invitation edition */
+.story-layout-rose{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px 7vw;text-align:left;padding-inline:10vw}
+.story-layout-rose .section-label,.story-layout-rose h2,.story-layout-rose .story-note{grid-column:2}
+.story-layout-rose .story-arch{grid-column:1;grid-row:1/span 3}
+.events-layout-rose .event-carousel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;overflow:visible}
+.events-layout-rose .event-card{min-width:0}
+.venue-layout-rose .map-card{border-radius:2px 70px 2px 70px}
+.rsvp-layout-rose{display:flex;flex-direction:column;align-items:center}
+
+.story-layout-emerald{display:grid;grid-template-columns:minmax(180px,.7fr) 1fr;align-items:center;text-align:left;gap:12px 5vw;padding-inline:12vw}
+.story-layout-emerald .story-arch{grid-row:1/span 3;grid-column:1}
+.story-layout-emerald .section-label,.story-layout-emerald h2,.story-layout-emerald .story-note{grid-column:2}
+.events-layout-emerald .event-carousel{display:flex;flex-direction:column;max-width:760px;margin:auto}
+.events-layout-emerald .event-card{display:grid;grid-template-columns:180px 1fr;min-width:0;border-radius:4px}
+.events-layout-emerald .event-art{min-height:180px}
+.venue-layout-emerald .map-art{min-height:390px}
+.rsvp-layout-emerald{display:grid;grid-template-columns:1fr auto;align-items:center;text-align:left;padding-inline:14vw}
+.rsvp-layout-emerald .section-label,.rsvp-layout-emerald h2,.rsvp-layout-emerald p{grid-column:1}
+.rsvp-layout-emerald>a{grid-column:2;grid-row:1/span 3}
+
+.story-layout-midnight{display:grid;grid-template-columns:1fr 1fr;align-items:center;text-align:left;gap:24px 8vw;padding-inline:12vw}
+.story-layout-midnight h2{font-size:clamp(48px,7vw,86px)}
+.story-layout-midnight .story-arch{grid-column:2;grid-row:1/span 3}
+.story-layout-midnight .story-note{max-width:390px}
+.events-layout-midnight .event-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;max-width:900px;margin:auto}
+.events-layout-midnight .event-card{min-width:0;display:flex;flex-direction:column-reverse}
+.events-layout-midnight .event-art{min-height:180px}
+.venue-layout-midnight .map-card{max-width:100%;border-radius:0}
+.venue-layout-midnight .map-art{min-height:440px}
+.rsvp-layout-midnight{display:flex;flex-direction:row;justify-content:space-evenly;flex-wrap:wrap;text-align:left}
+.rsvp-layout-midnight .section-label{width:100%;text-align:center}
+
+.story-layout-terracotta{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding-inline:14vw}
+.story-layout-terracotta .story-arch{align-self:flex-end;order:3;width:min(52vw,420px);height:400px}
+.story-layout-terracotta .story-note{max-width:540px}
+.events-layout-terracotta .event-carousel{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory}
+.events-layout-terracotta .event-card{min-width:min(82vw,420px);scroll-snap-align:center;border-radius:0}
+.venue-layout-terracotta .map-card{max-width:100%;margin-inline:0}
+.venue-layout-terracotta .map-art{min-height:330px}
+.rsvp-layout-terracotta{display:grid;grid-template-columns:1fr auto;gap:10px 35px;text-align:left;padding-inline:12vw}
+.rsvp-layout-terracotta .section-label,.rsvp-layout-terracotta h2,.rsvp-layout-terracotta p{grid-column:1}
+.rsvp-layout-terracotta>a{grid-column:2;grid-row:1/span 3;align-self:center}
+
+.story-layout-lavender{display:flex;flex-direction:column;align-items:center;text-align:center}
+.story-layout-lavender .story-arch{width:min(65vw,300px);height:360px;border-radius:160px 160px 26px 26px}
+.story-layout-lavender .story-note{max-width:560px}
+.events-layout-lavender .event-carousel{display:flex;gap:24px;overflow-x:auto;padding:15px 5vw 30px;scroll-snap-type:x mandatory}
+.events-layout-lavender .event-card{min-width:min(72vw,310px);scroll-snap-align:center;border-radius:48% 48% 22px 22px;overflow:hidden}
+.events-layout-lavender .event-art{min-height:210px}
+.venue-layout-lavender .map-card{border-radius:36px;overflow:hidden}
+.venue-layout-lavender .map-art{min-height:300px}
+.rsvp-layout-lavender{border-radius:110px 110px 0 0;margin-top:30px;padding-top:110px}
+
+@media(max-width:700px){
+.story-layout-rose,.story-layout-emerald,.story-layout-midnight{display:flex;flex-direction:column;text-align:center;padding-inline:22px}
+.story-layout-rose .story-arch,.story-layout-emerald .story-arch,.story-layout-midnight .story-arch{width:min(78vw,320px);height:300px}
+.events-layout-rose .event-carousel,.events-layout-midnight .event-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
+.events-layout-rose .event-card,.events-layout-midnight .event-card{min-width:82vw;scroll-snap-align:center}
+.events-layout-emerald .event-card{grid-template-columns:110px 1fr}
+.events-layout-emerald .event-art{min-height:150px}
+.rsvp-layout-emerald,.rsvp-layout-terracotta{display:flex;flex-direction:column;text-align:center}
+.story-layout-terracotta{align-items:center;text-align:center;padding-inline:22px}
+.story-layout-terracotta .story-arch{align-self:center;width:min(78vw,320px);height:300px}
+}
