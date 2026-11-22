@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {InvitationEditions} from './InvitationEditions';
+import InvitationEditions from './InvitationEditions';
 import {wedding} from './weddingData';
 export default function App(){
  const [theme,setTheme]=useState(()=>localStorage.getItem('wedding-theme')||'rose');
