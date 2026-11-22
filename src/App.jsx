@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, MapPin, CalendarDays, Clock, Sparkles, Music2, Flower2, ArrowDown } from 'lucide-react';
+import { Heart, MapPin, CalendarDays, Sparkles, Flower2, ArrowDown, Hand } from 'lucide-react';
 import { wedding } from './weddingData';
 
 function App() {
   const [opened, setOpened] = useState(false);
+  const [opening, setOpening] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const date = new Date('2026-12-20T18:00:00');
+  const handleOpen = () => {
+    if (opening || opened) return;
+    setOpening(true);
+    window.setTimeout(() => setOpened(true), 1050);
+  };
   const addToCalendar = () => {
     const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','DTSTART:20261220T123000Z','DTEND:20261220T160000Z','SUMMARY:Aarav & Ananya — Wedding','LOCATION:The Celebration Garden, Chandigarh, India','DESCRIPTION:Join us to celebrate the wedding of Aarav and Ananya.','END:VEVENT','END:VCALENDAR'].join('\\r\\n');
     const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
@@ -19,11 +24,12 @@ function App() {
       <AnimatePresence mode="wait">
       {!opened ? <motion.div className="envelope-wrap" key="envelope" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,scale:.92}}>
         <div className="eyebrow">A little note for you</div>
-        <div className="envelope" onClick={()=>setOpened(true)} role="button" tabIndex="0" onKeyDown={e=>e.key==='Enter'&&setOpened(true)}>
+        <motion.div className={`envelope ${opening ? 'opening' : ''}`} drag={opening ? false : 'y'} dragConstraints={{top:-95,bottom:0}} dragElastic={0.16} onDragEnd={(_,info)=>{if(info.offset.y < -35 || info.velocity.y < -250) handleOpen();}} onClick={handleOpen} role="button" tabIndex="0" aria-label="Swipe up or tap to open the wedding invitation" onKeyDown={e=>e.key==='Enter'&&handleOpen()}>
           <div className="letter"><span>YOU ARE</span><strong>Invited</strong><span>WITH LOVE</span></div>
           <div className="flap"></div><div className="seal"><Heart fill="currentColor" size={22}/></div>
-        </div>
-        <p className="tap">TAP THE SEAL TO OPEN</p>
+        </motion.div>
+        <div className="swipe-cue"><Hand size={20}/><span>SWIPE UP TO OPEN</span><span className="swipe-arrow">↑</span></div>
+        <p className="tap">OR TAP THE SEAL</p>
       </motion.div> : <motion.div className="invitation" key="invite" initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:.8}}>
         <div className="ornament">❧</div>
         <div className="eyebrow">Together with our families</div>
