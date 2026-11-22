@@ -1,47 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Heart, MapPin, CalendarDays, Hand, ChevronDown, Navigation, Copy, Check } from 'lucide-react';
-import { wedding } from './weddingData';
-function Countdown(){const target=useMemo(()=>new Date(wedding.isoDate),[]);const [now,setNow]=useState(Date.now());useEffect(()=>{const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id)},[]);const d=Math.max(0,target-now);return <div className="countdown">{[['DAYS',Math.floor(d/86400000)],['HRS',Math.floor(d/3600000)%24],['MIN',Math.floor(d/60000)%60],['SEC',Math.floor(d/1000)%60]].map(x=><div className="count-unit" key={x[0]}><strong>{String(x[1]).padStart(2,'0')}</strong><span>{x[0]}</span></div>)}</div>}
+import React,{useEffect,useState} from 'react';
+import {InvitationEditions} from './InvitationEditions';
+import {wedding} from './weddingData';
 export default function App(){
-const [opened,setOpened]=useState(false),[opening,setOpening]=useState(false),[reveal,setReveal]=useState(0),[revealed,setRevealed]=useState(false),[eventIndex,setEventIndex]=useState(0),[copied,setCopied]=useState(false),[theme,setTheme]=useState(()=>localStorage.getItem('wedding-theme')||'rose');
-useEffect(()=>{localStorage.setItem('wedding-theme',theme)},[theme]);
-const handleOpen=()=>{if(opening||opened)return;setOpening(true);setTimeout(()=>{setOpened(true);setOpening(false)},850)};
-const addToCalendar=()=>{const start=wedding.isoDate.replaceAll('-','').replaceAll(':',''),end=wedding.isoEndDate.replaceAll('-','').replaceAll(':','');const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding Invitation//EN','BEGIN:VEVENT','DTSTART:'+start,'DTEND:'+end,'SUMMARY:'+wedding.groom+' & '+wedding.bride+' — Wedding','LOCATION:'+wedding.venue+', '+wedding.address,'END:VEVENT','END:VCALENDAR'].join('\r\n');const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));const a=document.createElement('a');a.href=url;a.download='wedding-invitation.ics';a.click();URL.revokeObjectURL(url)};
-const address=wedding.venue+', '+wedding.address,mapsUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address);
-const copyAddress=async()=>{try{await navigator.clipboard.writeText(address);setCopied(true);setTimeout(()=>setCopied(false),1800)}catch{}};
-return <main className="site-shell" data-theme={theme}><header className="theme-header"><a className="brand-mark" href="#home">THE INVITATION</a><label className="theme-picker"><span>CHOOSE DESIGN</span><select aria-label="Choose invitation design" value={theme} onChange={e=>setTheme(e.target.value)}><option value="rose">01 · Royal Rose</option><option value="emerald">02 · Mughal Emerald</option><option value="midnight">03 · Midnight Regal</option><option value="terracotta">04 · Rajasthani Sand</option><option value="lavender">05 · Lavender Garden</option></select></label></header><div className="petal-field" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{'--i':i}}>✿</i>)}</div>
-<section className="hero" id="home"><div className="topline"><span>THE WEDDING CELEBRATION</span><Heart size={15}/><span>{wedding.shortDate}</span></div>
-{!opened?<motion.div className="envelope-wrap" initial={{opacity:0,y:25}} animate={{opacity:1,y:0}}><div className="eyebrow">A LITTLE NOTE, SEALED WITH LOVE</div><motion.div className={'envelope '+(opening?'opening':'')} drag={opening?false:'y'} dragConstraints={{top:-110,bottom:0}} dragElastic={.15} onDragEnd={(_,info)=>{if(info.offset.y < -35||info.velocity.y < -250)handleOpen()}} onClick={handleOpen} role="button" tabIndex="0" aria-label="Swipe up or tap to open invitation" onKeyDown={e=>e.key==='Enter'&&handleOpen()}><div className="letter"><span>A SPECIAL INVITATION</span><strong>You're Invited</strong><span>WITH LOVE & JOY</span></div><div className="flap"/><div className="seal"><Heart fill="currentColor" size={22}/></div></motion.div><div className="swipe-cue"><Hand size={19}/><span>SWIPE UP TO OPEN</span><b>↑</b></div><p className="tap">OR TAP THE WAX SEAL</p></motion.div>
-:<motion.div className="invitation-arch" initial={{opacity:0,y:22}} animate={{opacity:1,y:0}}><div className="arch-inner"><div className="ganesh-mark">ॐ</div><p className="arch-kicker">TOGETHER WITH THEIR FAMILIES</p><h1>{wedding.groom}<em>&</em>{wedding.bride}</h1><p className="arch-request">{wedding.message}</p><div className="arch-flourish">❧ ✧ ❧</div><p className="arch-date">{wedding.date}</p><span className="arch-time">{wedding.time}</span><a className="scroll-cue" href="#reveal">SCROLL TO EXPLORE <ChevronDown size={15}/></a></div></motion.div>}
-<div className="bottom-note">MADE WITH LOVE <Heart size={13} fill="currentColor"/></div></section>
-{opened&&<motion.div className="content" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.12}}>
-<section className="reveal-section vintage-reveal" id="reveal"><div className="section-label">A LITTLE SURPRISE FOR YOU</div><h2>Unroll our <i>Invitation</i></h2><p className="section-copy">Like the beautiful scroll invitations of old — gently pull down to reveal the special day.</p>
-<div className="scroll-invitation">
-  <div className="scroll-top-rod"><span>✦</span><b>✿</b><span>✦</span></div>
-  <div className="scroll-paper-window" style={{height:reveal*3.25}}>
-    <div className="scroll-paper" style={{height:reveal*3.25}}>
-      <div className="scroll-paper-inner">
-        <div className="scroll-ornament">❧　✧　❧</div><div className="ganesh-small">ॐ</div>
-        <span className="weekday">{new Date(wedding.isoDate).toLocaleDateString('en-US',{weekday:'long'})}</span>
-        <strong className="date-day">{new Date(wedding.isoDate).getDate()}</strong>
-        <span className="date-month">{new Date(wedding.isoDate).toLocaleDateString('en-US',{month:'long'})}</span>
-        <span className="date-year">{new Date(wedding.isoDate).getFullYear()}</span>
-        <p className="date-venue">{wedding.time} · {wedding.venue}</p>
-        <div className="scroll-ornament">❧　♡　❧</div>
-      </div>
-    </div>
-  </div>
-  <motion.div className="scroll-pull-bar" drag="y" dragConstraints={{top:0,bottom:260}} dragElastic={0.04} dragMomentum={false} onDrag={(_,info)=>{const n=Math.max(0,Math.min(100,info.offset.y/2.6));setReveal(n);setRevealed(n>94)}} onDragEnd={(_,info)=>{const n=Math.max(0,Math.min(100,info.offset.y/2.6));if(n>94){setReveal(100);setRevealed(true)}else{setRevealed(false);setReveal(0)}}} whileTap={{scale:1.04}}>
-    <span className="pull-grip">✥</span><span className="pull-label">PULL DOWN</span><span className="pull-tassel"/>
-  </motion.div>
-  </div>
-<p className="slider-hint"><Hand size={16}/>{reveal>94?'YOUR INVITATION IS REVEALED':'HOLD THE GOLDEN HANDLE & PULL DOWN'}</p>
-<p className="see-you">{reveal>94?'We cannot wait to celebrate with you':'A timeless little reveal, just for you'}</p>
-<Countdown/><button className="outline-calendar" onClick={addToCalendar}><CalendarDays size={16}/> ADD TO CALENDAR</button></section>
-<section className={"events events-layout-"+theme}><div className="section-label">SWIPE THROUGH THE CELEBRATIONS</div><h2>Wedding <i>Festivities</i></h2><div className="event-carousel">{wedding.events.map((event,i)=><article className={'event-card '+(i===eventIndex?'active':'')} key={event.name} onClick={()=>setEventIndex(i)}><div className={'event-art event-art-'+(i%5)}><span>{['❀','✿','❁','✧','♡'][i%5]}</span></div><div className="event-card-body"><small>{event.date} · {event.time}</small><h3>{event.name}</h3><p>{event.note}</p><div className="dress-code"><span>✦</span><div><small>CELEBRATION</small><b>{['Festive & colourful','Traditional attire','Ethnic elegance','Traditional attire','Wedding finery'][i%5]}</b></div></div></div></article>)}</div><div className="carousel-dots">{wedding.events.map((e,i)=><button key={e.name} aria-label={'Show '+e.name} className={i===eventIndex?'active':''} onClick={()=>setEventIndex(i)}/>)}</div><p className="swipe-note">‹ SWIPE TO SEE EVERY FUNCTION ›</p></section>
-<section className={"story story-layout-"+theme}><div className="section-label">A TALE OF TWO HEARTS</div><h2>Our <i>Story</i></h2><div className="story-arch"><div className="story-monogram">{wedding.groom.slice(0,1)} <span>♡</span> {wedding.bride.slice(0,1)}</div><p>ONE BEAUTIFUL JOURNEY</p></div><p className="story-note">Two hearts, two families, and a promise of forever. The best chapter begins with the people we love beside us.</p></section>
-<section className={"venue venue-layout-"+theme}><div className="section-label">LOCATION</div><h2>How to <i>Reach</i></h2><div className="map-card"><div className="map-art"><span className="map-water">✦</span><span className="map-road road-one"/><span className="map-road road-two"/><span className="map-route">〰 〰 〰 〰</span><span className="map-pin"><MapPin size={29} fill="currentColor"/></span><div className="map-label">{wedding.venue}<small>Tap to open in Maps</small></div></div></div><h3 className="venue-name">{wedding.venue}</h3><p className="venue-address">{wedding.address}</p><div className="venue-actions"><a className="solid-btn" href={mapsUrl} target="_blank" rel="noreferrer"><Navigation size={15}/> GET DIRECTIONS</a><button className="copy-btn" onClick={copyAddress}>{copied?<Check size={14}/>:<Copy size={14}/>} {copied?'COPIED':'COPY ADDRESS'}</button></div></section>
-<section className={"rsvp rsvp-layout-"+theme}><div className="section-label">KINDLY RESPOND</div><h2>Will you <i>join us?</i></h2><p>Your presence will make our celebration even more special.</p><a href={'https://wa.me/?text='+encodeURIComponent('Hello! I would love to join '+wedding.groom+' & '+wedding.bride+' for their wedding celebration.')} target="_blank" rel="noreferrer">RSVP WITH LOVE <Heart size={15}/></a></section>
-<section className="closing"><div className="ornament">❧</div><p>We saved you a seat<br/><i>in our forever story.</i></p><div className="footer-names">{wedding.groom} <span>&</span> {wedding.bride}</div><span className="closing-date">{wedding.date} · {wedding.time}</span><Heart size={17} fill="currentColor"/></section><footer><small>WITH LOVE & GRATITUDE</small><p>WE CAN'T WAIT TO CELEBRATE WITH YOU</p><a href="#home">BACK TO TOP ↑</a><div className="design-credit">© 2026 · DESIGN BY <strong>SANDHU</strong></div></footer></motion.div>}
-</main>}
+ const [theme,setTheme]=useState(()=>localStorage.getItem('wedding-theme')||'rose');
+ const [opened,setOpened]=useState(false),[copied,setCopied]=useState(false);
+ useEffect(()=>{localStorage.setItem('wedding-theme',theme)},[theme]);
+ const address=wedding.venue+', '+wedding.address;
+ const mapsUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address);
+ const onCalendar=()=>{const start=wedding.isoDate.replaceAll('-','').replaceAll(':',''),end=wedding.isoEndDate.replaceAll('-','').replaceAll(':','');const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding Invitation//EN','BEGIN:VEVENT','DTSTART:'+start,'DTEND:'+end,'SUMMARY:'+wedding.groom+' & '+wedding.bride+' — Wedding','LOCATION:'+address,'END:VEVENT','END:VCALENDAR'].join('\\r\\n');const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));const a=document.createElement('a');a.href=url;a.download='wedding-invitation.ics';a.click();URL.revokeObjectURL(url)};
+ const onCopy=async()=>{try{await navigator.clipboard.writeText(address);setCopied(true);setTimeout(()=>setCopied(false),1600)}catch{}};
+ const switchTheme=value=>{setTheme(value);setOpened(false)};
+ return <main className={'site-shell edition-shell theme-'+theme}>
+  <header className="edition-header"><a href="#top" className="edition-brand">SANDHU <span>· WEDDING STUDIO</span></a><label><small>SELECT AN EDITION</small><select value={theme} onChange={e=>switchTheme(e.target.value)} aria-label="Choose invitation design"><option value="rose">01 / The Editorial</option><option value="emerald">02 / The Sacred</option><option value="midnight">03 / The After Dark</option><option value="terracotta">04 / The Heritage Trail</option><option value="lavender">05 / The Garden</option></select></label></header>
+  <div id="top"><InvitationEditions theme={theme} w={wedding} opened={opened} onOpen={()=>setOpened(true)} onCalendar={onCalendar} mapsUrl={mapsUrl} onCopy={onCopy} copied={copied}/></div>
+  <footer className="edition-footer"><span>MADE FOR THE MOMENTS THAT MATTER</span><b>DESIGN BY SANDHU</b><small>© 2026 · WEDDING STUDIO</small></footer>
+ </main>
+}
