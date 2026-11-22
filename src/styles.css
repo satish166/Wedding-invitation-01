@@ -345,3 +345,27 @@
  .terra-hero{grid-template-columns:1fr;padding:75px 8vw}.terra-sun-disc{width:170px;margin:35px auto}.terra-names{text-align:center}.terra-date{padding:75px 8vw;flex-direction:column;text-align:center;gap:35px}.terra-stepper{grid-template-columns:1fr}.terra-step-tabs{flex-direction:row}.terra-step-tabs button{flex:1}.terra-active-event{padding:28px 20px}
  .lav-bloom,.lav-story{grid-template-columns:1fr;padding:75px 8vw}.lav-bloom-art{width:75vw;margin:auto}.lav-event-grid{grid-template-columns:1fr 1fr}.lav-event-grid article,.lav-event-grid article:nth-child(4){grid-column:auto;transform:none;min-height:250px;border-radius:70px 70px 10px 10px}.lav-event-grid article:last-child{grid-column:1/-1}
 }
+
+
+/* Alignment polish — keep repeated elements on a consistent vertical rhythm */
+.lav-event-grid{align-items:stretch}
+.lav-event-grid article,
+.lav-event-grid article:nth-child(2),
+.lav-event-grid article:nth-child(5){transform:none;align-self:stretch;min-height:310px}
+.lav-event-grid article:nth-child(4){grid-column:2/span 2}
+.rose-event-list article{min-height:118px;align-items:center}
+.emerald-rituals article{min-height:112px}
+.midnight-agenda article{min-height:112px}
+.terra-stepper{align-items:stretch}
+.terra-active-event{height:100%;display:flex;flex-direction:column;justify-content:center}
+@media(max-width:700px){
+ .lav-event-grid{align-items:stretch;grid-auto-rows:1fr}
+ .lav-event-grid article,
+ .lav-event-grid article:nth-child(2),
+ .lav-event-grid article:nth-child(5),
+ .lav-event-grid article:nth-child(4),
+ .lav-event-grid article:last-child{grid-column:auto;transform:none;min-height:270px;height:100%}
+ .rose-event-list article{min-height:0}
+ .emerald-rituals article,.midnight-agenda article{min-height:0}
+ .terra-active-event{min-height:250px}
+}
