@@ -19,7 +19,7 @@ return <main className="site-shell"><div className="petal-field" aria-hidden="tr
 <div className="scroll-invitation">
   <div className="scroll-top-rod"><span>✦</span><b>✿</b><span>✦</span></div>
   <div className="scroll-paper-window" style={{height:reveal*3.25}}>
-    <motion.div className="scroll-paper" animate={{height: reveal*3.25,opacity:1}} transition={{height:{type:'spring',stiffness:150,damping:24},opacity:{duration:0.18}}}>
+    <div className="scroll-paper" style={{height:reveal*3.25}}>
       <div className="scroll-paper-inner">
         <div className="scroll-ornament">❧　✧　❧</div><div className="ganesh-small">ॐ</div>
         <span className="weekday">{new Date(wedding.isoDate).toLocaleDateString('en-US',{weekday:'long'})}</span>
@@ -29,13 +29,12 @@ return <main className="site-shell"><div className="petal-field" aria-hidden="tr
         <p className="date-venue">{wedding.time} · {wedding.venue}</p>
         <div className="scroll-ornament">❧　♡　❧</div>
       </div>
-    </motion.div>
+    </div>
   </div>
   <motion.div className="scroll-pull-bar" drag="y" dragConstraints={{top:0,bottom:260}} dragElastic={0.04} dragMomentum={false} onDrag={(_,info)=>{const n=Math.max(0,Math.min(100,info.offset.y/2.6));setReveal(n);setRevealed(n>94)}} onDragEnd={(_,info)=>{const n=Math.max(0,Math.min(100,info.offset.y/2.6));if(n>94){setReveal(100);setRevealed(true)}else{setRevealed(false);setReveal(0)}}} whileTap={{scale:1.04}}>
     <span className="pull-grip">✥</span><span className="pull-label">PULL DOWN</span><span className="pull-tassel"/>
   </motion.div>
-  <div className="scroll-bottom-rod"><span>❀</span><span>❀</span></div>
-</div>
+  </div>
 <p className="slider-hint"><Hand size={16}/>{reveal>94?'YOUR INVITATION IS REVEALED':'HOLD THE GOLDEN HANDLE & PULL DOWN'}</p>
 <p className="see-you">{reveal>94?'We cannot wait to celebrate with you':'A timeless little reveal, just for you'}</p>
 <Countdown/><button className="outline-calendar" onClick={addToCalendar}><CalendarDays size={16}/> ADD TO CALENDAR</button></section>
